@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+<title>Books</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="static/styles/styles.css">
+<link rel="script" href="static/js/">
+</head>
+<body>
+
+<div class="header">
+  <h1>Books</h1>
+</div>
+<div class="row">
+  <h3>Category</h3>
+  <div class="column">
+        <div class="sidenav">
+            <div class ="dropdown">
+                <button class="dropbtn">Category
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="{% url 'Acedemi' %}">Academia</a>
+                    <a href="{% url 'Art' %}">Art</a>
+                    <a href="{% url 'images' %}">Books</a>
+                    <a href="{% url 'Buildings' %}">Buildings</a>
+                    <a href="{% url 'Cars' %}">Cars</a> 
+                </div>
+            </div>
+            <div class="list">
+                <h3>List</h3>
+                <div class="list1">
+                    <u1>
+                        {% for Movies in Movies %}
+                            <a href="#">{{ Movies.Name }}</a>
+                        {% endfor %}
+                    </u1>
+                </div>
+            </div>
+        </div>
+  </div>
+  
+  <div class="column1">
+    <h5>Images</h5>
+    <div class="container">
+           
+      <u1> 
+          {% for Movies in Movies  %}
+            <div class="mySlides">
+                <img src="{{ Movies.featured_image.url }}" draggable="true" ondragstart="drag(event)" id="drag1" width="1000" height="500" > 
+            </div>
+          {% endfor %}
+            <div class="mySlides">
+              <div class="container mt-3">
+                  <h5> Upload </h5>
+                    <form action="upload/" method="POST" class="dropzone" id="my-dropzone" >
+                      {% csrf_token %}
+                      <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                      <div class="fallback">
+                        <input name="file" type="file" multiple />
+                      </div>
+                    </form>
+                </div>
+
+            </div>
+      </u1>
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
+      <div class="row1">
+        <u1>
+            {% for Movies in Movies %}
+                <div class="column2">
+                    <img class="demo cursor" src="{{ Movies.featured_image.url }}" style="width:100px" onclick="{{ Movies.featured_image.url }}" alt="The Woods">
+                </div>
+            {% endfor %}
+        </u1>
+      </div>
+  </div>
+</div>
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  var captionText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+</body>
+</html>

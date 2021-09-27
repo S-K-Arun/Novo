@@ -1,0 +1,14 @@
+{% extends 'main2.html' %}
+{% block title %}
+<h4> Block </h4>
+{% endblock title %}
+
+{% block content %}
+  <h1> Upload </h1>
+  <form action="/file-upload" class="dropzone" >
+    <div class="fallback">
+        <input name="file" type="file" multiple />
+    </div>
+  </form>
+
+{% endblock content %}
