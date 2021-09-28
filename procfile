@@ -1,1 +1,1 @@
-web: gunicorn spikeh.wsgi
+web: gunicorn spike.wsgi
