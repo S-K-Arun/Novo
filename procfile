@@ -1,1 +1,1 @@
-web: gunicorn spike.wsgi
+web: gunicorn viewer.wsgi
